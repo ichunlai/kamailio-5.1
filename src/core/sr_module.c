@@ -51,7 +51,7 @@
 #include <string.h>
 #include <stddef.h> /* for offsetof */
 
-struct sr_module *modules = 0;
+struct sr_module *modules = 0;  // 越晚註冊的 module 放在 linked list 越前面
 
 /*We need to define this symbol on Solaris becuase libcurl relies on libnspr which looks for this symbol.
    If it is not defined, dynamic module loading (dlsym) fails */
@@ -144,7 +144,7 @@ int is_rpc_worker(
     int rank)
 {
     if (rank == PROC_RPC
-        || (rank > PROC_MAIN && (child_sip_rpc_mode & CHILD_SIP_RPC) != 0))
+    || (rank > PROC_MAIN && (child_sip_rpc_mode & CHILD_SIP_RPC) != 0))
         return 1;
     return 0;
 }
@@ -153,7 +153,7 @@ int is_sip_worker(
     int rank)
 {
     if (rank > PROC_MAIN
-        || ((rank == PROC_RPC || rank == PROC_NOCHLDINIT)
+    || ((rank == PROC_RPC || rank == PROC_NOCHLDINIT)
             && (child_sip_rpc_mode & CHILD_RPC_SIP) != 0))
         return 1;
     return 0;
@@ -288,6 +288,7 @@ static int register_module(
     ret = -1;
 
     /* add module to the list */
+    // alloc sr_module 結構
     if ((mod = pkg_malloc(sizeof(struct sr_module))) == 0)
     {
         LM_ERR("memory allocation failure\n");

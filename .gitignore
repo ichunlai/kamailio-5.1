@@ -52,3 +52,6 @@ libiname.lst
 .vscode
 # source insight
 kamailio.si4project
+# slickedit files
+kamailio.vpwhistu
+kamailio.vtg
