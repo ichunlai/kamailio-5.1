@@ -50,3 +50,5 @@ libiname.lst
 *.7
 # vscode tmp files
 .vscode
+# source insight
+kamailio.si4project
